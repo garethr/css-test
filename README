@@ -2,9 +2,11 @@ CSS is hard to test automatically. Their appear to be two potential approaches
 which might have merit in solving this problem and and this sample code 
 represents one of them.
 
-The basic idea resolves around programatic comparison of images, some based on 
-screen shots and others generated dynamically from URLs. The capability to 
-analyse only a segment of a page has also been included.
+test_image.py
+
+The basic idea here resolves around programatic comparison of images, some
+based on  screen shots and others generated dynamically from URLs. The
+capability to analyse only a segment of a page has also been included.
 
 The overhead introduced by the need to take screenshots of a site makes this
 technique more useful for spotting regression issues in a live site than for
@@ -15,10 +17,16 @@ As this is currently a proof of concept in that it only supports testing in
 webkit, and even then only on OS X. Support for other browsers relies on 
 other screen grab tools being integrated into the code.
 
-The sample code is written in Python but other implementations would be
-straightforward. All of the actual work is done via other commands; namely 
-webkit2png by Paul Hammond and the Imagemagik suite of tools.
-
 This is not intended as a tool to check whether a finished website looks
 identical to a set of photoshop images. It's intended to spot changes in
 unexpected areas of a sites layout or design.
+
+test_dom.py
+
+Here we plan on using Selenium to extract rendered DOM values like text-size
+from a given web page and compare them against expected values. This could be useful both for regression testing and for assertion based test driven
+development.
+
+The sample code is written in Python but other implementations would be
+straightforward. Much of the actual work is done via other commands; namely 
+webkit2png by Paul Hammond and the Imagemagik suite of tools.
