@@ -48,7 +48,7 @@ class CSSTests(unittest.TestCase):
         else:
             self.assert_(False, "%s and %s are not identical" 
                 % (expected, actual))
-        #commands.getoutput("rm diff.png")
+        commands.getoutput("rm diff.png")
 
     def assert_image_and_url_same(self, image, url):
         """
@@ -67,7 +67,7 @@ class CSSTests(unittest.TestCase):
             self.assert_(False, "the page found at %s does not look like %s" 
                 % (url, image))
         commands.getoutput("rm %s-full.png" % filename)
-        #commands.getoutput("rm diff.png")
+        commands.getoutput("rm diff.png")
         
     def assert_urls_same(self, expected, actual):
         """
@@ -93,7 +93,7 @@ class CSSTests(unittest.TestCase):
                 % (actual, expected))
         commands.getoutput("rm %s-full.png" % expected_filename)
         commands.getoutput("rm %s-full.png" % actual_filename)
-        #commands.getoutput("rm diff.png")
+        commands.getoutput("rm diff.png")
         
     def assert_image_and_url_segment_same(self, image, url, segment):
         """
@@ -117,7 +117,7 @@ class CSSTests(unittest.TestCase):
                     % (url, image))
         commands.getoutput("rm %s-full.png" % filename)
         commands.getoutput("rm %s-segment.png" % filename)
-        #commands.getoutput("rm diff.png")
+        commands.getoutput("rm diff.png")
         
 class SampleCSSTests(CSSTests):
     """
