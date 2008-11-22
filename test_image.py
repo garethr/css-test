@@ -4,12 +4,14 @@ CSS is hard to test automatically. Their appear to be two potential approaches
 which might have merit in solving this problem and and this sample code 
 represents one of them.
 
-The idea is to check whether a URL or segment of a given URL looks identical
-to a reference image.
+The basic idea resolves around programatic comparison of images, some based on 
+screen shots and others generated dynamically from URLs. The capability to 
+analyse only a segment of a page has also been included.
 
 The overhead introduced by the need to take screenshots of a site makes this
 technique more useful for spotting regression issues in a live site than for
-a test driven approach to writing CSS.
+a test driven approach to writing CSS. Tools will be provided to make this 
+easier at a later date.
 
 As this is currently a proof of concept in that it only supports testing in 
 webkit, and even then only on OS X. Support for other browsers relies on 
@@ -46,7 +48,7 @@ class CSSTests(unittest.TestCase):
         else:
             self.assert_(False, "%s and %s are not identical" 
                 % (expected, actual))
-        commands.getoutput("rm diff.png")
+        #commands.getoutput("rm diff.png")
 
     def assert_image_and_url_same(self, image, url):
         """
@@ -65,7 +67,33 @@ class CSSTests(unittest.TestCase):
             self.assert_(False, "the page found at %s does not look like %s" 
                 % (url, image))
         commands.getoutput("rm %s-full.png" % filename)
-        commands.getoutput("rm diff.png")
+        #commands.getoutput("rm diff.png")
+        
+    def assert_urls_same(self, expected, actual):
+        """
+        Check that two specified urls are visualy identical
+        """
+        commands.getoutput("webkit2png -F %s" % expected)
+        expected_filename = re.sub('\W', '', expected)
+        expected_filename = re.sub('^http', '', expected_filename)
+        expected_filename = "%s-full.png" % expected_filename
+
+
+        commands.getoutput("webkit2png -F %s" % actual)
+        actual_filename = re.sub('\W', '', actual)
+        actual_filename = re.sub('^http', '', actual_filename)
+        actual_filename = "%s-full.png" % actual_filename
+
+        output = commands.getoutput("compare -metric PSNR %s %s diff.png" 
+            % (expected_filename, actual_filename))
+        if output == "inf":
+            self.assert_(True)
+        else:
+            self.assert_(False, "the page found at %s does not look like %s" 
+                % (actual, expected))
+        commands.getoutput("rm %s-full.png" % expected_filename)
+        commands.getoutput("rm %s-full.png" % actual_filename)
+        #commands.getoutput("rm diff.png")
         
     def assert_image_and_url_segment_same(self, image, url, segment):
         """
@@ -89,7 +117,7 @@ class CSSTests(unittest.TestCase):
                     % (url, image))
         commands.getoutput("rm %s-full.png" % filename)
         commands.getoutput("rm %s-segment.png" % filename)
-        commands.getoutput("rm diff.png")
+        #commands.getoutput("rm diff.png")
         
 class SampleCSSTests(CSSTests):
     """
@@ -104,7 +132,6 @@ class SampleCSSTests(CSSTests):
         commands.getoutput("rm localhost8000-full.png")
         
     def test_assert_image_and_url_same(self):
-        
         image = "sample/localhost8000-full.png"
         url = "http://localhost:8000"
         self.assert_image_and_url_same(image, url)
@@ -114,6 +141,11 @@ class SampleCSSTests(CSSTests):
         url = "http://localhost:8000"
         segment = "500x500+200+200"
         self.assert_image_and_url_segment_same(image, url, segment)
+
+    def test_assert_urls_same(self):
+        expected = "http://localhost:8000"
+        actual = "http://localhost:8000"
+        self.assert_urls_same(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()
