@@ -4,7 +4,7 @@ represents one of them.
 
 test_image.py
 
-The basic idea here resolves around programatic comparison of images, some
+The basic idea here revolves around programatic comparison of images, some
 based on  screen shots and others generated dynamically from URLs. The
 capability to analyse only a segment of a page has also been included.
 
