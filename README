@@ -24,7 +24,8 @@ unexpected areas of a sites layout or design.
 test_dom.py
 
 Here we plan on using Selenium to extract rendered DOM values like text-size
-from a given web page and compare them against expected values. This could be useful both for regression testing and for assertion based test driven
+from a given web page and compare them against expected values. This could be
+useful both for regression testing and for assertion based test driven
 development.
 
 The sample code is written in Python but other implementations would be
