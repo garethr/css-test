@@ -1,6 +1,6 @@
 """
 
-CSS is hard to test automatically. Their appear to be two potential approaches 
+CSS is hard to test automatically. There appear to be two potential approaches 
 which might have merit in solving this problem and and this sample code 
 represents one of them.
 
